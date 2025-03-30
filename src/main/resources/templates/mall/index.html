@@ -1,0 +1,368 @@
+<!-- Copyright (c) 2019-2020 十三 all rights reserved. -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="mall/header::head-fragment('饶阳县旅游工艺品-首页','index')">
+</head>
+<body>
+<header th:replace="mall/header::header-fragment"></header>
+<content id="content">
+    <nav th:replace="mall/header::nav-fragment"></nav>
+    <div id="banner">
+        <div class="all-sort-list">
+            <th:block th:each="category : ${categories}">
+                <div class="item">
+                    <h3><span>·</span><a href="##">
+                        <th:block th:text="${category.categoryName}"></th:block>
+                    </a></h3>
+                    <div class="item-list clearfix">
+                        <div class="subitem">
+                            <th:block th:each="secondLevelCategory : ${category.secondLevelCategoryVOS}">
+                                <dl class="fore1">
+                                    <dt><a href="#">
+                                        <th:block th:text="${secondLevelCategory.categoryName}"></th:block>
+                                    </a></dt>
+                                    <dd>
+                                        <th:block
+                                                th:each="thirdLevelCategory : ${secondLevelCategory.thirdLevelCategoryVOS}">
+                                            <em><a href="#"
+                                                   th:href="@{'/search?goodsCategoryId='+${thirdLevelCategory.categoryId}}">
+                                                <th:block th:text="${thirdLevelCategory.categoryName}"></th:block>
+                                            </a></em>
+                                        </th:block>
+                                    </dd>
+                                </dl>
+                            </th:block>
+                        </div>
+                    </div>
+                </div>
+            </th:block>
+        </div>
+        <div class="swiper-container fl">
+            <div class="swiper-wrapper">
+                <!-- 配置了轮播图则显示后台配置的轮播图 -->
+                <th:block th:unless="${#lists.isEmpty(carousels)}">
+                    <th:block th:each="carousel : ${carousels}">
+                        <div class="swiper-slide">
+                            <a th:href="@{${carousel.redirectUrl}}">
+                                <img th:src="@{${carousel.carouselUrl}}" alt="">
+                            </a>
+                        </div>
+                    </th:block>
+                </th:block>
+                <!-- 未配置轮播图则显示默认的三张轮播图 -->
+                <th:block th:if="${#lists.isEmpty(carousels)}">
+                    <div class="swiper-slide">
+                        <img src="./mall/image/swiper/banner01.jpg" alt="">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="./mall/image/swiper/banner02.jpg" alt="">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="./mall/image/swiper/banner03.jpg" alt="">
+                    </div>
+                </th:block>
+            </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        </div>
+    </div>
+<!--    <div id="recommand">-->
+        <!-- 已配置热销工艺品则显示配置内容 -->
+<!--        <th:block th:unless="${#lists.isEmpty(hotGoodses)}">-->
+<!--            <th:block th:each="hotGoodse : ${hotGoodses}">-->
+<!--                <div class="hot-image">-->
+<!--                    <a th:href="@{'/goods/detail/'+${hotGoodse.goodsId}}">-->
+<!--                        <img th:src="@{${hotGoodse.goodsCoverImg}}" th:alt="${hotGoodse.goodsName}">-->
+<!--                    </a>-->
+<!--                </div>-->
+<!--            </th:block>-->
+<!--        </th:block>-->
+        <!-- 未配置热销工艺品则显示默认 -->
+<!--        <th:block th:if="${#lists.isEmpty(hotGoodses)}">-->
+<!--            <div class="hot-image">-->
+<!--                <a href="##">-->
+<!--                    <img src="./mall/image/up/a.jpg" alt="">-->
+<!--                </a>-->
+<!--            </div>-->
+<!--            <div class="hot-image">-->
+<!--                <a href="##">-->
+<!--                    <img src="./mall/image/up/b.jpg" alt="">-->
+<!--                </a>-->
+<!--            </div>-->
+<!--            <div class="hot-image">-->
+<!--                <a href="##">-->
+<!--                    <img src="./mall/image/up/c.jpg" alt="">-->
+<!--                </a>-->
+<!--            </div>-->
+<!--            <div class="hot-image">-->
+<!--                <a href="##">-->
+<!--                    <img src="./mall/image/up/d.jpg" alt="">-->
+<!--                </a>-->
+<!--            </div>-->
+<!--        </th:block>-->
+<!--    </div>-->
+    <div id="flash">
+        <h2>新品上线</h2>
+        <ul>
+            <!-- 已配置新品则显示配置内容 -->
+            <th:block th:unless="${#lists.isEmpty(newGoodses)}">
+                <th:block th:each="newGoods : ${newGoodses}">
+                    <li>
+                        <a th:href="@{'/goods/detail/'+${newGoods.goodsId}}">
+                            <img th:src="@{${newGoods.goodsCoverImg}}" th:alt="${newGoods.goodsName}">
+                            <p class="name" th:text="${newGoods.goodsName}">NewBeeMall</p>
+                            <p class="discount" th:text="${newGoods.goodsIntro}">NewBeeMall</p>
+                            <p class="item_price" th:text="${newGoods.sellingPrice}">NewBeeMall</p>
+                        </a>
+                    </li>
+                </th:block>
+            </th:block>
+            <!-- 未配置则显示默认
+             山水之间油画：
+
+
+
+-->
+            <th:block th:if="${#lists.isEmpty(newGoodses)}">
+                <li>
+                    <a href="##">
+                        <img src="./mall/image/newSale/shanshui.jpg" alt=""/>
+                        <p class="name">山水之间油画</p>
+                        <p class="discount">山明水秀 水清无鱼</p>
+                        <p class="price">1500元起</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="##">
+                        <img src="./mall/image/newSale/hailuo.jpg" alt=""/>
+                        <p class="name">海螺珠宝耳环</p>
+                        <p class="discount">润物细无声 珠光宝气 </p>
+                        <p class="price">77元起</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="##">
+                        <img src="./mall/image/newSale/honey.jpg" alt=""/>
+                        <p class="name">蜂蜜手工皂</p>
+                        <p class="discount">：金玉满堂 香风袭人 </p>
+                        <p class="price">66元起</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="##">
+                        <img src="./mall/image/newSale/yaobian.jpg" alt=""/>
+                        <p class="name">窑变瓷花瓶</p>
+                        <p class="discount">窈窕淑女 色彩斑斓 </p>
+                        <p class="price">1200元起</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="##">
+                        <img src="./mall/image/newSale/gufa.jpg" alt=""/>
+                        <p class="name">古法青釉茶具</p>
+                        <p class="discount">古色古香 青瓷雅致 </p>
+                        <p class="price">388元起</p>
+                    </a>
+                </li>
+            </th:block>
+        </ul>
+    </div>
+
+    <div id="recommend">
+        <h2>为你推荐</h2>
+        <a href="##" class="more">查看更多>></a>
+        <ul>
+            <!-- 已配置推荐工艺品则显示配置内容 -->
+            <th:block th:unless="${#lists.isEmpty(recommendGoodses)}">
+                <th:block th:each="recommendGoods : ${recommendGoodses}">
+                    <li>
+                        <a th:href="@{'/goods/detail/'+${recommendGoods.goodsId}}">
+                            <div class="info discount" th:text="${recommendGoods.tag}">
+                                新品
+                            </div>
+                            <img th:src="@{${recommendGoods.goodsCoverImg}}" th:alt="${recommendGoods.goodsName}">
+                            <p class="name" th:text="${recommendGoods.goodsName}">NewBeeMall</p>
+                            <p class="item_price" th:text="${recommendGoods.sellingPrice}">NewBeeMall</p>
+                            <p class="counter">猜你喜欢</p>
+                            <div class="comment">
+                                <p>精选工艺品</p>
+                                <p>为你推荐好看不贵的工艺品</p>
+                            </div>
+                        </a>
+                    </li>
+                </th:block>
+            </th:block>
+            <!-- 未配置则显示默认
+            镂空瓷雕饰品
+   50元
+   46元
+    336元
+ -->
+            <th:block th:if="${#lists.isEmpty(recommendGoodses)}">
+                <li>
+                    <a href="##">
+                        <div class="info discount">
+                            新品
+                        </div>
+                        <img src="./mall/image/recommand/loukong.jpg" alt=""/>
+                        <p class="name">镂空瓷雕饰品</p>
+                        <p class="price">378元</p>
+                        <p class="counter">猜你喜欢</p>
+                        <div class="comment">
+                            <p>精选工艺品</p>
+                            <p>为你推荐好看不贵的工艺品</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="##">
+                        <div class="info discount">
+                            5折起
+                        </div>
+                        <img src="./mall/image/recommand/biluochun.jpg" alt=""/>
+                        <p class="name">碧螺塔景区特色明信片</p>
+                        <p class="price">50元</p>
+                        <p class="counter">猜你喜欢</p>
+                        <div class="comment">
+                            <p>精选工艺品</p>
+                            <p>为你推荐好看不贵的工艺品</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="##">
+                        <div class="info discount">
+                            新品
+                        </div>
+                        <img src="./mall/image/recommand/shanshuitese.jpg" alt=""/>
+                        <p class="name">秦岭山水特色刺绣挂饰</p>
+                        <p class="price">46元</p>
+                        <p class="counter">猜你喜欢</p>
+                        <div class="comment">
+                            <p>精选工艺品</p>
+                            <p>为你推荐好看不贵的工艺品</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="##">
+                        <div class="info discount">
+                            官降
+                        </div>
+                        <img src="./mall/image/recommand/taoyong.jpg" alt=""/>
+                        <p class="name">古代陶俑仿制品</p>
+                        <p class="price">336元</p>
+                        <p class="counter">猜你喜欢</p>
+                        <div class="comment">
+                            <p>精选工艺品</p>
+                            <p>为你推荐好看不贵的工艺品</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="##">
+                        <div class="info discount">
+                            新品
+                        </div>
+                        <img src="./mall/image/recommand/shanhaiguan.png" alt=""/>
+                        <p class="name">山海关关城雕塑模型</p>
+                        <p class="price">120元</p>
+                        <p class="counter">猜你喜欢</p>
+                        <div class="comment">
+                            <p>精选工艺品</p>
+                            <p>为你推荐好看不贵的工艺品</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="##">
+                        <div class="info discount">
+                            热销
+                        </div>
+                        <img src="./mall/image/recommand/hailuo.jpg" alt=""/>
+                        <p class="name">饶阳县特产海螺贝壳手链</p>
+                        <p class="price">68元</p>
+                        <p class="counter">猜你喜欢</p>
+                        <div class="comment">
+                            <p>精选工艺品</p>
+                            <p>为你推荐好看不贵的工艺品</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="##">
+                        <div class="info discount">
+                            享折扣
+                        </div>
+                        <img src="./mall/image/recommand/baizitu.jpg" alt=""/>
+                        <p class="name">明清风格百子图刺绣</p>
+                        <p class="price">90元</p>
+                        <p class="counter">猜你喜欢</p>
+                        <div class="comment">
+                            <p>精选工艺品</p>
+                            <p>为你推荐好看不贵的工艺品</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="##">
+                        <div class="info discount">
+                            最低价
+                        </div>
+                        <img src="./mall/image/recommand/minzutese.jpg" alt=""/>
+                        <p class="name">
+                            民族特色刺绣围巾</p>
+                        <p class="price">50元</p>
+                        <p class="counter">猜你喜欢</p>
+                        <div class="comment">
+                            <p>精选工艺品</p>
+                            <p>为你推荐好看不贵的工艺品</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="##">
+                        <div class="info discount">
+                            热销
+                        </div>
+                        <img src="./mall/image/recommand/shidiao.jpg" alt=""/>
+                        <p class="name">定制仿古石雕门牌</p>
+                        <p class="price">400元</p>
+                        <p class="counter">猜你喜欢</p>
+                        <div class="comment">
+                            <p>精选工艺品</p>
+                            <p>为你推荐好看不贵的工艺品</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="##">
+                        <div class="info discount">
+                            热销
+                        </div>
+                        <img src="./mall/image/recommand/shanshuihua.jpg" alt=""/>
+                        <p class="name">山水画意花瓶</p>
+                        <p class="price">499元</p>
+                        <p class="counter">猜你喜欢</p>
+                        <div class="comment">
+                            <p>精选工艺品</p>
+                            <p>为你推荐好看不贵的工艺品</p>
+                        </div>
+                    </a>
+                </li>
+            </th:block>
+        </ul>
+    </div>
+</content>
+<div th:replace="mall/footer::footer-fragment"></div>
+<!-- jQuery -->
+<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
+<!-- Bootstrap 4 -->
+<script th:src="@{/admin/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/mall/js/swiper-bundle.min.js}" type="text/javascript"></script>
+<script th:src="@{/admin/plugins/sweetalert2/sweetalert2.all.min.js}"></script>
+<script th:src="@{/mall/js/index.js}" type="text/javascript"></script>
+<script th:src="@{/mall/js/search.js}" type="text/javascript"></script>
+</body>
+</html>
